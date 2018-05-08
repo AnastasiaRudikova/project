@@ -1,9 +1,3 @@
-/* 
- * File:   main.c
- * Author: User
- *
- * Created on 20 ??????? 2018 ?., 12:28
- */
 
 #include <stdio.h>
 #include <stdlib.h>

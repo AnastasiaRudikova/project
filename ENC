@@ -41,31 +41,36 @@
 
 unsigned char volatile kva=0;
 
-void __attribute__ (( interrupt, shadow, no_auto_psv )) _CNInterrupt(void)
+void __attribute__ ((interrupt, no_auto_psv )) _CNInterrupt(void)
 {
-//    kva++;
-//    if(kva>5)
-//    {
-        LATAbits.LATA6=1;
-         IFS1bits.CNIF = 0;
-//    }
+    kva++;
+    if(kva>100)
+    {
+        LATAbits.LATA6=!LATAbits.LATA6;
+        kva=0;
+    }
+    IFS1bits.CNIF = 0;
 }
 
 void ENC_INIT(){
-//    TRISBbits.TRISB5 = 0;
-    CNEN1bits.CN7IE = 1;
-//    CNPU1bits.CN7PUE = 1;
-    IFS1bits.CNIF = 0;
-//    IPC4bits.CNIP = 0b111;
-    IEC1bits.CNIE = 1;
+    AD1PCFG = 0xffff; //turn off ADC PORTB
+    TRISAbits.TRISA6=0;
+    TRISBbits.TRISB4=1;
+    CNEN1bits.CN6IE= 1;
+    CNPU1bits.CN6PUE=1;
+    CNEN1bits.CN7IE= 1;
+    CNPU1bits.CN7PUE=1;
+    IFS1bits.CNIF=0;
+    IEC1bits.CNIE=1;
 }
 
-void main(void) {
-    TRISAbits.TRISA6=0;
+void main(void) 
+{
     
-    while(1){
-       
-       }
-
+    TRISGbits.TRISG0=0;
+    LATGbits.LATG0=1;
     
+    while(1)
+    {
+    } 
 }
